@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "printhub-springboot-final",
+		"name": "PrintHUB Spring Boot API (Final)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@printhub.com\",\n    \"password\": \"admin123\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "auth", "login" ]
+						}
+					}
+				},
+				{
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/auth/me",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "auth", "me" ]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/users?page=1&size=10",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "users" ],
+							"query": [ { "key": "page", "value": "1" }, { "key": "size", "value": "10" } ]
+						}
+					}
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Staff\",\n    \"email\": \"john@printhub.com\",\n    \"password\": \"john123\",\n    \"role\": \"EMPLOYEE\",\n    \"status\": \"ACTIVE\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/users",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "users" ]
+						}
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Updated\",\n    \"role\": \"ADMIN\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/users/USER_ID_HERE",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "users", "USER_ID_HERE" ]
+						}
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/users/USER_ID_HERE",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "users", "USER_ID_HERE" ]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "List Products",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/products?page=1&size=10",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "products" ],
+							"query": [ { "key": "page", "value": "1" }, { "key": "size", "value": "10" } ]
+						}
+					}
+				},
+				{
+					"name": "Search Products",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/products/search?q=paper",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "products", "search" ],
+							"query": [ { "key": "q", "value": "paper" } ]
+						}
+					}
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"A4 Paper Box\",\n    \"price\": 15.00,\n    \"stock\": 100,\n    \"reorderLevel\": 20,\n    \"status\": \"ACTIVE\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/products",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "products" ]
+						}
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": 16.50\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/products/PRODUCT_ID_HERE",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "products", "PRODUCT_ID_HERE" ]
+						}
+					}
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/products/PRODUCT_ID_HERE",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "products", "PRODUCT_ID_HERE" ]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "List Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/suppliers?page=1&size=10",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "suppliers" ],
+							"query": [ { "key": "page", "value": "1" }, { "key": "size", "value": "10" } ]
+						}
+					}
+				},
+				{
+					"name": "Create Supplier",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Global Prints Ltd\",\n    \"contactPerson\": \"Alice Smith\",\n    \"email\": \"alice@global.com\",\n    \"phone\": \"11223344\",\n    \"address\": \"Main Road, City\",\n    \"status\": \"ACTIVE\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/suppliers",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "suppliers" ]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "List Orders",
+					"request": {
+						"method": "GET",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/orders?page=1&size=10",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "orders" ],
+							"query": [ { "key": "page", "value": "1" }, { "key": "size", "value": "10" } ]
+						}
+					}
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"productId\": \"PRODUCT_ID_HERE\",\n            \"quantity\": 2\n        }\n    ]\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/orders",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "orders" ]
+						}
+					}
+				},
+				{
+					"name": "Update Status",
+					"request": {
+						"method": "PUT",
+						"header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ],
+						"url": {
+							"raw": "{{protocol}}://{{host}}:{{port}}/api/orders/ORD_ID_HERE/status?status=COMPLETED",
+							"protocol": "{{protocol}}",
+							"host": [ "{{host}}" ],
+							"port": "{{port}}",
+							"path": [ "api", "orders", "ORD_ID_HERE", "status" ],
+							"query": [ { "key": "status", "value": "COMPLETED" } ]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{ "key": "protocol", "value": "http" },
+		{ "key": "host", "value": "localhost" },
+		{ "key": "port", "value": "8080" },
+		{ "key": "token", "value": "PASTE_JWT_TOKEN_HERE" }
+	]
+}
