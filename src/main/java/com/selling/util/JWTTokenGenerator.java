@@ -3,13 +3,13 @@ package com.selling.util;
 import java.security.Key;
 import java.util.Date;
 
+import com.selling.security.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.selling.dto.UserDto;
-import com.selling.service.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

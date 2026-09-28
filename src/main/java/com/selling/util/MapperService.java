@@ -1,18 +1,18 @@
 package com.selling.util;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class MapperService {
+
   private final ModelMapper modelMapper;
 
   public MapperService(ModelMapper modelMapper) {
     this.modelMapper = modelMapper;
   }
 
-  public <S, D> D map(S source, Class<D> destType) {
-    Object data = source == null ? null : modelMapper.map(source, destType);
-    return (D) data;
+  public <D, T> D map(T source, Class<D> destinationType) {
+    return modelMapper.map(source, destinationType);
   }
 }

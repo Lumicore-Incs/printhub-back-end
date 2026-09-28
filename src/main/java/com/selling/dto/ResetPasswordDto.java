@@ -9,12 +9,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class UserDto {
-    private Long id;
-    private String name;
+public class ResetPasswordDto {
     private String email;
-    private String telephone;
-    private String role;
-    private String registration_date;
+    private String otp;
     private String password;
 }
