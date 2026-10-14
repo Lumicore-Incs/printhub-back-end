@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.selling.dto.ResetPasswordDto;
-import com.selling.security.UserService;
+import com.selling.service.UserService;
 import com.selling.util.TokenStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
