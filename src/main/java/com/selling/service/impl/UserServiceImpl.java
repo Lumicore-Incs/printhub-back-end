@@ -1,4 +1,4 @@
-package com.selling.security.impl;
+package com.selling.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import com.selling.dto.get.UserDtoForGet;
 import com.selling.model.Otp;
 import com.selling.model.User;
 import com.selling.repository.OtpRepo;
-import com.selling.security.UserService;
+import com.selling.service.UserService;
 import com.selling.util.MailService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
