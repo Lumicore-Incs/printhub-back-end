@@ -61,56 +61,55 @@ public class OrderServiceImpl implements OrderService {
         Order savedOrder = orderRepository.save(order);
         Order finalSavedOrder = savedOrder;
         List<OrderDetails> savedDetails = dto.getOrderDetails() == null
-            ? List.of()
-            : detailsRepository.saveAll(dto.getOrderDetails().stream()
+                ? List.of()
+                : detailsRepository.saveAll(dto.getOrderDetails().stream()
                 .map(detailsDto -> createDetails(detailsDto, finalSavedOrder))
                 .toList());
 
         savedOrder.setTotalPrice(savedDetails.stream()
-            .map(OrderDetails::getTotal)
-            .reduce(BigDecimal.ZERO, BigDecimal::add));
+                .map(OrderDetails::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
         savedOrder = orderRepository.save(savedOrder);
 
         OrderDto savedOrderDto = toDto(savedOrder);
         savedOrderDto.setOrderDetails(savedDetails.stream()
-            .map(this::toDetailsDto)
-            .toList());
+                .map(this::toDetailsDto)
+                .toList());
         return savedOrderDto;
     }
 
-        private OrderDetails createDetails(OrderDetailsDto dto, Order order) {
+    private OrderDetails createDetails(OrderDetailsDto dto, Order order) {
         if (dto.getQty() == null || dto.getQty() <= 0) {
             throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Quantity must be greater than zero");
+                    HttpStatus.BAD_REQUEST,
+                    "Quantity must be greater than zero");
         }
 
         Item item = itemRepository.findById(dto.getProductId())
-            .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Item not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Item not found"));
         if (item.getPrice() == null || item.getPrice().signum() < 0) {
             throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST, "Invalid item price");
+                    HttpStatus.BAD_REQUEST, "Invalid item price");
         }
 
         OrderDetails details = new OrderDetails();
         details.setItem(item);
         details.setOrder(order);
         details.setQty(dto.getQty());
-        details.setTotal(item.getPrice()
-            .multiply(BigDecimal.valueOf(dto.getQty())));
+        details.setTotal(dto.getTotal());
         return details;
-        }
+    }
 
-        private OrderDetailsDto toDetailsDto(OrderDetails details) {
+    private OrderDetailsDto toDetailsDto(OrderDetails details) {
         return new OrderDetailsDto(
-            details.getOrderDetailsId(),
-            details.getQty(),
-            details.getTotal(),
-            details.getItem().getProductId(),
-            details.getOrder().getOrderId()
+                details.getOrderDetailsId(),
+                details.getQty(),
+                details.getTotal(),
+                details.getItem().getProductId(),
+                details.getOrder().getOrderId()
         );
-        }
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -171,4 +170,3 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(order);
     }
 }
-
