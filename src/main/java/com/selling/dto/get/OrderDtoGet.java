@@ -16,8 +16,6 @@ public class OrderDtoGet {
 
     private String orderId;
 
-    private String customerName;
-
     private String productName;
 
     private Integer quantity;

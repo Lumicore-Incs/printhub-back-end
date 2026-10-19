@@ -2,7 +2,6 @@ package com.selling.controller;
 
 import com.selling.dto.OrderDto;
 import com.selling.dto.UserDto;
-import com.selling.dto.get.OrderDtoGet;
 import com.selling.service.OrderService;
 import com.selling.util.ApiResponse;
 import com.selling.util.JWTTokenGenerator;
@@ -13,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -60,7 +60,10 @@ public class OrderController {
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "status", required = false) String status,
-            @RequestParam(name = "id", required = false) Integer id) {
+            @RequestParam(name = "dateFrom", required = false)
+            LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false)
+            LocalDate dateTo) {
 
         try {
             if (!jwtTokenGenerator.validateJwtToken(authorizationHeader)) {
@@ -75,46 +78,12 @@ public class OrderController {
                                 400));
             }
 
-            UserDto userDto =
-                    jwtTokenGenerator.getUserFromJwtToken(authorizationHeader);
-
-            String role = userDto.getRole();
-
-            boolean isAdmin =
-                    "SUPER USER".equalsIgnoreCase(role)
-                            || "ADMIN".equalsIgnoreCase(role);
-
-            // Get one order by ID
-            if (id != null) {
-                OrderDto order = orderService.getOrderById(id);
-
-                // Non-admin users can access only their own orders
-                if (!isAdmin &&
-                        !orderService.isOrderOwnedByUser(id, Math.toIntExact(userDto.getId()))) {
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                            .body(ApiResponse.error(
-                                    "You do not have permission to access this order",
-                                    403));
-                }
-
-                return ResponseEntity.ok(order);
-            }
-
-            // Admin and Super User: all orders with pagination
-            if (isAdmin) {
-                PaginationResponse<OrderDtoGet> response =
-                        orderService.getAllOrdersPaginated(
-                                page, size, search, status);
-
-                return ResponseEntity.ok(response);
-            }
-
-            // Other users: only their own orders with pagination
-            PaginationResponse<OrderDtoGet> response =
-                    orderService.getOrdersByUserPaginated(
-                            Math.toIntExact(userDto.getId()), page, size, search, status);
+            PaginationResponse<OrderDto> response =
+                    orderService.getAllOrdersPaginated(
+                            page, size, search, status, dateFrom, dateTo);
 
             return ResponseEntity.ok(response);
+
 
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode())
@@ -185,4 +154,3 @@ public class OrderController {
         }
     }
 }
-

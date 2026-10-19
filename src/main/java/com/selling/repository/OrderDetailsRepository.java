@@ -10,6 +10,7 @@ public interface OrderDetailsRepository
 
     List<OrderDetails> findByOrder_OrderId(Integer orderId);
 
+    List<OrderDetails> findByOrder_OrderIdIn(List<Integer> orderIds);
+
     boolean existsByOrder_OrderId(Integer orderId);
 }
-
